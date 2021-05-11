@@ -6,17 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @Controller
 public class CatsController {
 
     @Autowired
-    private ProductRepository productRepository;
+    ProductRepository productRepository;
 
-    @GetMapping("/cats")
-    public String cats(Model model) {
-        Iterable<Product> products = productRepository.findAll();
-        model.addAttribute("products", products);
+    @GetMapping("/{type}")
+    public String cats(Model model, @PathVariable("type") String type) {
+
+        model.addAttribute("products", productRepository.findByType(type));
+        System.out.println(productRepository.findAll());
+        model.addAttribute("type", "Всё для " + type);
         return "cats";
     }
 
