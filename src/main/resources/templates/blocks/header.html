@@ -32,7 +32,13 @@
 
         <div class="col-md-3 text-end">
             <a href="/bag" type="button" class="btn btn-outline-primary me-2">Shopping cart</a>
-            <a href="/account" type="button" class="btn btn-primary">Sign in</a>
+            <a href="/login" type="button" class="btn btn-primary">Sign in</a>
         </div>
     </div>
 </div>
+
+    <div>
+        <form th:action="/logout" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+    </div>
