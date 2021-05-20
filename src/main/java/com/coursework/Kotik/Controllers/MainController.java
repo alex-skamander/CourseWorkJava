@@ -13,4 +13,15 @@ public class MainController {
         return "home";
     }
 
+    @GetMapping("/home")
+    public String homes(Model model) {
+        model.addAttribute("title", "KOTIK");
+        return "home";
+    }
+
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login";
+    }
+
 }
