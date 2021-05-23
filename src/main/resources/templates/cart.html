@@ -9,31 +9,35 @@
 
 <header th:insert="blocks/header :: header"></header>
 
-    <main>
-        <div class="container">
-            <br>
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Артикул</th>
-                        <th>Название</th>
-                        <th>Цена</th>
-                        <th>Количество</th>
-                        <th>Сумма</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="cart">
-                    <tr><td colspan="6"><img src="img/loading.gif" alt=""></td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div>Итого: <span id="total-cart-summa">0</span> руб.</div>
-            <br>
-            <button id="order" class="btn btn-info">Оформить заказ</button>
+<main>
+    <div class="container">
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                </tr>
+                </thead>
+                <tbody id="cart">
+                <tr th:each="purchase: ${purchaseList}">
+                    <td th:text="${productService.findProductById(purchase.getProductId()).getName()}"></td>
+                    <td th:text="${productService.findProductById(purchase.getProductId()).getPrice()}"></td>
+                    <td th:text="${purchase.getProduct_count()}"></td>
+                    <td th:text="${purchase.getProduct_count() * productService.findProductById(purchase.getProductId()).getPrice()}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-    </main>
+        <div>Итого: <span id="total-cart-summa" th:text="${total}"></span> руб.</div>
+        <br>
+        <button id="order" class="btn btn-info" style="margin-bottom: 300px;">Оформить заказ</button>
+
+    </div>
+</main>
 
 <footer th:insert="blocks/footer :: footer"></footer>
 

@@ -3,6 +3,7 @@ package com.coursework.Kotik.Controllers;
 import com.coursework.Kotik.Models.Purchase;
 import com.coursework.Kotik.Models.User;
 import com.coursework.Kotik.Service.CustomUserDetailsService;
+import com.coursework.Kotik.Service.MainService;
 import com.coursework.Kotik.Service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class CartController {
     @Autowired
@@ -22,11 +25,20 @@ public class CartController {
     @Autowired
     private PurchaseService purchaseService;
 
+    @Autowired
+    private MainService productService;
+
     @GetMapping("/cart")
     public String home(Authentication authentication, Model model) {
-        String name = authentication.getName();
-        User user = userDetailsService.findByUsername(name);
-        model.addAttribute("product");
+        User user = ((User) userDetailsService.findByUsername(authentication.getName()));
+        int sum = 0;
+        List<Purchase> purchaseList = purchaseService.getAllPurchaseUser(user.getId());
+        for (Purchase purchase: purchaseList){
+            sum += productService.findProductById(purchase.getProductId()).getPrice() * purchase.getProduct_count();
+        }
+        model.addAttribute("total", sum);
+        model.addAttribute("purchaseList", purchaseList);
+        model.addAttribute("productService", productService);
         return "cart";
     }
 

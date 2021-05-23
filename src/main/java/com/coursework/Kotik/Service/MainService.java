@@ -14,4 +14,7 @@ public class MainService {
     public List<Product> findByType(String type){
         return productRepository.findByType(type);
     }
+    public Product findProductById(Long id){
+        return productRepository.findProductById(id);
+    }
 }
