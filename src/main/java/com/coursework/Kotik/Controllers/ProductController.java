@@ -12,12 +12,12 @@ public class ProductController {
     @Autowired
     private MainService mainService;
 
-//    @GetMapping("/{type}")
-//    public String cats(Model model, @PathVariable("type") String type) {
-//        model.addAttribute("products", mainService.findByType(type));
-//        model.addAttribute("type", "Everything for " + type);
-//        return "product";
-//    }
+    @GetMapping("/{type}")
+    public String cats(Model model, @PathVariable("type") String type) {
+        model.addAttribute("products", mainService.findByType(type));
+        model.addAttribute("type", "Everything for " + type);
+        return "product";
+    }
 
 }
 

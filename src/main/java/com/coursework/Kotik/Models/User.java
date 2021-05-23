@@ -6,7 +6,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -24,6 +26,14 @@ public class User implements UserDetails {
     private String password;
     @Column(name="user_role", nullable = false)
     private String user_role;
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "user_purchases",
+            joinColumns = { @JoinColumn(name = "t_user_id")},
+            inverseJoinColumns = { @JoinColumn(name = "product_id")}
+    )
+    List<Product> productList = new ArrayList<>();
 
     @Transient
     private String role;

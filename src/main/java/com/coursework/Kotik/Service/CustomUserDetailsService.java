@@ -1,5 +1,6 @@
 package com.coursework.Kotik.Service;
 
+import com.coursework.Kotik.Repositories.ProductRepository;
 import com.coursework.Kotik.Repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import com.coursework.Kotik.Models.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,10 +25,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     Logger LOG = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
     private final UserRepository userRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public CustomUserDetailsService(UserRepository userRepository) {
+    public CustomUserDetailsService(UserRepository userRepository, ProductRepository productRepository) {
         this.userRepository = userRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -44,6 +48,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         return null;
     }
 
+    public User findByUsername (String username){
+        return userRepository.findByUsername(username);
+    }
 
     public static User build(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -55,6 +62,11 @@ public class CustomUserDetailsService implements UserDetailsService {
                 user.getEmail(),
                 user.getPassword(),
                 authorities);
+    }
+
+    public void addPurchase(User user, Long product_id){
+        user.getProductList().add(productRepository.findProductById(product_id));
+        userRepository.save(user);
     }
 
     // ToDo Метод добавления пользователя в бд
