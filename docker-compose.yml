@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: hackme
+      POSTGRES_DB: Kotik
+    ports:
+      - 5432:5432
+
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - 8089:8088
+    environment:
+      DATABASE_URL: database
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: hackme

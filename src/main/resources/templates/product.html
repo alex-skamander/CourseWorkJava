@@ -28,12 +28,7 @@
                             <h5 class="name_product" th:text="${product.getName}"><font style="vertical-align: inherit; font-family: bold;"></font></h5>
                             <p class="card-text" th:text="${product.getDescription}"><font style="vertical-align: inherit; font-size: large"><font style="vertical-align: inherit;"></font></font></p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <form method="post" th:action="@{'/cart/addProduct/{id}'(id=${product.id})}" th:method="post">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn"> Add </button>
-                                    </div>
-                                </form>
-
+                                        <button type="submit" class="btn" th:onclick="'javascript:addPurchaseToCart(' + ${product.id} + ')'"> Add </button>
                                 <div class="text-price" th:text="${product.getPrice}"><font style="font-size: large; font-family: bold"></font></div>
                             </div>
                         </div>
@@ -48,8 +43,10 @@
 <footer th:insert="blocks/footer :: footer"></footer>
 
 <script>
-    const postToCart = () => {
-        fetch('cart/addProduct/')
+    const addPurchaseToCart = (id) => {
+        fetch('/cart/addPurchase/' + id, {method: 'POST'}).then(function (resp) {
+            return resp.text();
+        })
     }
 </script>
 </body>

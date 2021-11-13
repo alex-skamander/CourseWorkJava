@@ -42,8 +42,8 @@ public class CartController {
         return "cart";
     }
 
-    @RequestMapping(value = "/cart/addProduct/{id}", method = RequestMethod.POST)
     @ResponseBody
+    @PostMapping("/cart/addPurchase/{id}")
     public void addProduct(Authentication authentication, @PathVariable("id") Long productId, Model model){
         User user = userDetailsService.findByUsername(authentication.getName());
         System.out.println(user.getUsername());
