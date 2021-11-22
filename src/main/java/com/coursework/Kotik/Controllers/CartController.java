@@ -3,14 +3,10 @@ package com.coursework.Kotik.Controllers;
 import com.coursework.Kotik.Models.Purchase;
 import com.coursework.Kotik.Models.User;
 import com.coursework.Kotik.Service.CustomUserDetailsService;
-import com.coursework.Kotik.Service.MainService;
+import com.coursework.Kotik.Service.ProductService;
 import com.coursework.Kotik.Service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +22,7 @@ public class CartController {
     private PurchaseService purchaseService;
 
     @Autowired
-    private MainService productService;
+    private ProductService productService;
 
     @GetMapping("/cart")
     public String home(Authentication authentication, Model model) {
